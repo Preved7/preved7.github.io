@@ -3,23 +3,71 @@
 <head>
     <title>Shifter Zerus simulator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <style>
+        .setup{
+            margin:10px auto;
+            width:500px;
+            text-align:center;
+        }
+        .setup input{
+            font-size: 20px;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        .result-items img{
+            max-width:200px;
+            max-height:300px;
+            display: block;
+            margin: 0 auto;
+        }
+        .result-items a{
+            width:210px;
+            height:310px;
+            display:inline-block;
+            position:relative;
+            top:0;
+            left:0;
+            padding-bottom: 15px;
+            margin-right:5px;
+        }
+        .manacost{
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            text-align:center;
+        }
+        .frame{
+            border:solid 5px transparent;
+            width:200px;
+            height:290px;
+            position:absolute;
+            left:0;
+            top:0;
+            margin:0;
+            padding:0;
+        }
+        .playable .frame{
+            border-color: #99cc00;
+        }
+    </style>
 </head>
 <body>
 <div class="setup">
-    <label>Start at <select data-bind="options: turns, selectedValue: startTurn, change: refreshCards"></select></label>
-    <input type="submit" data-bind="refreshCards" value="Retry" />
+    <div data-bind="text: 'total cards: '+ cards.length"></div>
+    <label>Start at <select data-bind="options: turns, selectedValue: startTurn, event:{change: refreshCards}"></select></label>
+    <input type="submit" data-bind="click: refreshCards" value="Retry" />
 </div>
 <div class="result">
-    <div class="result-items" data-bind="foreach: selectedCards">
-        <!-- ko if: url()!='' -->
-        <a data-bind="attr: {href: 'http://www.hearthpwn.com/' + url() }, css: currentMana()&gt;=manacost()?'playable card':'card'">
-            <img data-bind="attr: { title: name, src: img}"/>
-            <div class="manacost" data-bind="text: currentMana"></div>
-        </a>
-        <!-- /ko -->
-    </div>
+    <div class="result-items" data-bind="foreach: selectedCards"><!-- ko if: url()!=''
+     --><a data-bind="attr: {href: 'http://www.hearthpwn.com/' + url() }, css: currentMana()&gt;=manacost()?'playable card':'card'">
+            <div class="frame"></div><img data-bind="attr: { alt: name, src: img, title: name}"/>
+            <div class="manacost" data-bind="text: 'mana: '+currentMana()"></div>
+        </a><!-- /ko 
+ --></div>
 </div>
 <a href="http://www.hearthpwn.com/forums/hearthstone-general/card-discussion/128188-tier-categorization-of-wog-cards">Discuss!</a>
+<a id="downloadlink">save data</a>
 <script>
     var manaRef = [{id:94, name: 'Molten Giant', manacost:
 20},
@@ -220,7 +268,22 @@
 {id:267, name: 'Captain Greenskin', manacost:
 5},
 {id:22294, name: 'Clockwork Knight', manacost:
-5}];
+5},
+
+
+
+{id:22274, manacost:2},{id:27219, manacost:2},{id:500, manacost:2},{id:27211, manacost:2},{id:22370, manacost:2},{id:422, manacost:2},{id:479, manacost:2},{id:22335, manacost:2},{id:117, manacost:2},{id:395, manacost:2},{id:456, manacost:2},{id:80, manacost:2},{id:67, manacost:2},{id:197, manacost:2},{id:584, manacost:2},{id:339, manacost:2},{id:357, manacost:2},{id:27250, manacost:2},{id:19, manacost:2},{id:435, manacost:2},{id:14, manacost:2},{id:54, manacost:2},{id:535, manacost:2},{id:279, manacost:2},{id:4, manacost:2},{id:22354, manacost:2},{id:208, manacost:2},{id:372, manacost:2},{id:22386, manacost:2},{id:22265, manacost:2},{id:22371, manacost:2},{id:25, manacost:2},{id:22304, manacost:2},{id:22398, manacost:2},{id:247, manacost:2},{id:577, manacost:1},{id:57, manacost:1},{id:473, manacost:1},{id:196, manacost:1},{id:453, manacost:1},{id:22310, manacost:1},{id:22347, manacost:1},{id:14442, manacost:1},{id:129, manacost:1},{id:356, manacost:1},{id:85, manacost:1},{id:22311, manacost:1},{id:564, manacost:1},{id:510, manacost:1},{id:660, manacost:1},{id:22322, manacost:1},{id:513, manacost:1},{id:436, manacost:1},{id:22263, manacost:1},{id:263, manacost:1},{id:55, manacost:1},{id:420, manacost:1},{id:600, manacost:1},{id:27221, manacost:1},{id:27256, manacost:1},{id:483, manacost:1},{id:24, manacost:1},{id:27215, manacost:1},{id:103, manacost:1},{id:76, manacost:1},{id:86, manacost:1},{id:22350, manacost:1},{id:27246, manacost:1},{id:14460, manacost:1},{id:340, manacost:1},{id:410, manacost:1},{id:112, manacost:1},{id:629, manacost:1},{id:123, manacost:1},{id:27225, manacost:0},{id:273, manacost:0},
+
+{id:428, manacost:3},{id:425, manacost:3},{id:23, manacost:3},{id:97, manacost:3},{id:22301, manacost:3},{id:73, manacost:3},{id:14437, manacost:3},{id:75, manacost:3},{id:27214, manacost:3},{id:88, manacost:3},{id:424, manacost:3},{id:22291, manacost:3},{id:388, manacost:3},{id:212, manacost:3},{id:27251, manacost:3},{id:22369, manacost:3},{id:22389, manacost:3},{id:14457, manacost:3},{id:557, manacost:3},{id:3, manacost:3},{id:625, manacost:3},{id:22295, manacost:3},{id:236, manacost:3},{id:22378, manacost:3},{id:27255, manacost:3},{id:22296, manacost:3},{id:14445, manacost:3},{id:610, manacost:3},{id:69, manacost:3},{id:386, manacost:3},{id:22392, manacost:3},{id:14443, manacost:3},{id:178, manacost:3},{id:209, manacost:3},{id:41, manacost:3},{id:519, manacost:3},{id:392, manacost:3},{id:373, manacost:3},{id:411, manacost:3},{id:22341, manacost:3},{id:362, manacost:3},{id:613, manacost:3},{id:22306, manacost:3},{id:368, manacost:3},{id:27253, manacost:3},{id:222, manacost:3},{id:22395, manacost:3},{id:157, manacost:3},{id:95, manacost:3},{id:502, manacost:3},{id:47, manacost:3},{id:22366, manacost:3},{id:475, manacost:3},{id:22356, manacost:3},{id:22348, manacost:3},{id:434, manacost:3},{id:286, manacost:3},{id:22297, manacost:3},{id:22275, manacost:3},{id:611, manacost:3},{id:324, manacost:3},{id:22299, manacost:3},{id:22365, manacost:3},{id:477, manacost:3},{id:265, manacost:3},{id:245, manacost:3},{id:22270, manacost:3},{id:51, manacost:3},{id:27220, manacost:3},{id:119, manacost:3},{id:22330, manacost:3},{id:193, manacost:3},{id:174, manacost:3},{id:74, manacost:2},{id:22333, manacost:2},{id:641, manacost:2},{id:153, manacost:2},{id:191, manacost:2},{id:22298, manacost:2},{id:644, manacost:2},{id:576, manacost:2},{id:525, manacost:2},{id:637, manacost:2},{id:289, manacost:2},{id:22352, manacost:2},{id:559, manacost:2},{id:612, manacost:2},{id:328, manacost:2},{id:22336, manacost:2},{id:27243, manacost:2},{id:22303, manacost:2},{id:417, manacost:2},{id:305, manacost:2},{id:467, manacost:2},{id:22307, manacost:2},{id:213, manacost:2},{id:22268, manacost:2},{id:22292, manacost:2},{id:390, manacost:2},{id:663, manacost:2},
+
+
+{id:14434, manacost:5},{id:84, manacost:5},{id:27234, manacost:5},{id:507, manacost:5},{id:14452, manacost:5},{id:587, manacost:5},{id:124, manacost:5},{id:682, manacost:5},{id:27249, manacost:5},{id:450, manacost:5},{id:476, manacost:5},{id:604, manacost:5},{id:14435, manacost:5},{id:624, manacost:5},{id:602, manacost:5},{id:22355, manacost:5},{id:674, manacost:5},{id:22318, manacost:5},{id:27231, manacost:5},{id:22264, manacost:5},{id:184, manacost:5},{id:22375, manacost:5},{id:22344, manacost:5},{id:22367, manacost:5},{id:22305, manacost:5},{id:648, manacost:5},{id:627, manacost:5},{id:389, manacost:5},{id:101, manacost:5},{id:325, manacost:5},{id:338, manacost:5},{id:27239, manacost:5},{id:22271, manacost:5},{id:162, manacost:5},{id:22315, manacost:5},{id:509, manacost:5},{id:572, manacost:4},{id:176, manacost:4},{id:27245, manacost:4},{id:27252, manacost:4},{id:504, manacost:4},{id:22312, manacost:4},{id:656, manacost:4},{id:14439, manacost:4},{id:31, manacost:4},{id:14444, manacost:4},{id:22308, manacost:4},{id:140, manacost:4},{id:22359, manacost:4},{id:128, manacost:4},{id:542, manacost:4},{id:22269, manacost:4},{id:14441, manacost:4},{id:472, manacost:4},{id:261, manacost:4},{id:22337, manacost:4},{id:27233, manacost:4},{id:27210, manacost:4},{id:125, manacost:4},{id:22390, manacost:4},{id:14455, manacost:4},{id:22381, manacost:4},{id:246, manacost:4},{id:27237, manacost:4},{id:22323, manacost:4},{id:22287, manacost:4},{id:225, manacost:4},{id:14436, manacost:4},{id:27236, manacost:4},{id:459, manacost:4},{id:27260, manacost:4},{id:130, manacost:4},{id:192, manacost:4},{id:22376, manacost:4},{id:22259, manacost:4},{id:127, manacost:4},{id:346, manacost:4},{id:22362, manacost:4},{id:15, manacost:4},{id:659, manacost:4},{id:217, manacost:4},{id:402, manacost:4},{id:22374, manacost:4},{id:27244, manacost:4},{id:22293, manacost:4},{id:326, manacost:4},{id:634, manacost:4},{id:22357, manacost:4},{id:42, manacost:4},{id:603, manacost:4},{id:566, manacost:4},{id:27229, manacost:4},{id:27226, manacost:4},{id:22290, manacost:4},{id:360, manacost:4},{id:22351, manacost:4},{id:523, manacost:4},{id:274, manacost:4},{id:22361, manacost:4},{id:151, manacost:4},
+
+
+{id:31110, manacost:10},{id:33177, manacost:10},{id:33134, manacost:10},{id:33168, manacost:10},{id:33156, manacost:10},{id:33164, manacost:9},{id:33173, manacost:9},{id:31118, manacost:8},{id:33147, manacost:8},{id:33138, manacost:8},{id:33122, manacost:7},{id:33170, manacost:7},{id:31117, manacost:7},{id:33157, manacost:6},{id:35189, manacost:6},{id:33178, manacost:6},{id:33127, manacost:6},{id:33149, manacost:6},{id:33152, manacost:6},{id:33154, manacost:6},{id:33159, manacost:6},{id:31109, manacost:5},{id:33148, manacost:5},{id:33131, manacost:5},{id:35188, manacost:5},{id:33179, manacost:5},{id:33180, manacost:5},{id:31115, manacost:5},{id:33123, manacost:4},{id:35184, manacost:4},{id:31121, manacost:4},{id:33133, manacost:4},{id:33128, manacost:4},{id:33121, manacost:4},{id:33160, manacost:4},{id:33162, manacost:4},{id:31111, manacost:4},{id:35186, manacost:4},{id:33175, manacost:4},{id:33139, manacost:4},{id:33181, manacost:3},{id:33161, manacost:3},{id:33137, manacost:3},{id:33153, manacost:3},{id:31112, manacost:3},{id:35187, manacost:3},{id:31114, manacost:2},{id:33136, manacost:2},{id:33135, manacost:2},{id:33132, manacost:1},{id:33171, manacost:1},{id:35190, manacost:1},{id:33130, manacost:1},{id:33158, manacost:1},
+
+
+];
 
 var cards = [
 {url:'/cards/94-molten-giant', img:'http://media-Hearth.cursecdn.com/avatars/148/584/94.png', name:"Molten Giant"},
@@ -520,21 +583,1048 @@ var cards = [
 {url:'/cards/267-captain-greenskin', img:'http://media-Hearth.cursecdn.com/avatars/149/517/267.png', name:"Captain Greenskin"},
 
 
-{url:'/cards/22294-clockwork-knight', img:'http://media-Hearth.cursecdn.com/avatars/252/238/22294.png', name:"Clockwork Knight"}]
+{url:'/cards/22294-clockwork-knight', img:'http://media-Hearth.cursecdn.com/avatars/252/238/22294.png', name:"Clockwork Knight"},
+
+// page:2
+
+{url:'/cards/14434-dark-iron-skulker', img:'http://media-Hearth.cursecdn.com/avatars/197/954/14434.png', name:"Dark Iron Skulker"},
+
+
+{url:'/cards/84-darkscale-healer', img:'http://media-Hearth.cursecdn.com/avatars/147/745/84.png', name:"Darkscale Healer"},
+
+
+{url:'/cards/27234-djinni-of-zephyrs', img:'http://media-Hearth.cursecdn.com/avatars/274/986/27234.png', name:"Djinni of Zephyrs"},
+
+
+{url:'/cards/507-doomguard', img:'http://media-Hearth.cursecdn.com/avatars/148/211/507.png', name:"Doomguard"},
+
+
+{url:'/cards/14452-dragon-consort', img:'http://media-Hearth.cursecdn.com/avatars/197/996/14452.png', name:"Dragon Consort"},
+
+
+{url:'/cards/587-druid-of-the-claw', img:'http://media-Hearth.cursecdn.com/avatars/148/73/587.png', name:"Druid of the Claw"},
+
+
+{url:'/cards/124-earth-elemental', img:'http://media-Hearth.cursecdn.com/avatars/148/142/124.png', name:"Earth Elemental"},
+
+
+{url:'/cards/682-elite-tauren-chieftain', img:'http://media-Hearth.cursecdn.com/avatars/149/590/682.png', name:"Elite Tauren Chieftain"},
+
+
+{url:'/cards/27249-ethereal-conjurer', img:'http://media-Hearth.cursecdn.com/avatars/272/307/27249.png', name:"Ethereal Conjurer"},
+
+
+{url:'/cards/450-faceless-manipulator', img:'http://media-Hearth.cursecdn.com/avatars/285/243/635951427191063605.png', name:"Faceless Manipulator"},
+
+
+{url:'/cards/476-fen-creeper', img:'http://media-Hearth.cursecdn.com/avatars/147/363/476.png', name:"Fen Creeper"},
+
+
+{url:'/cards/604-frostwolf-warlord', img:'http://media-Hearth.cursecdn.com/avatars/147/691/604.png', name:"Frostwolf Warlord"},
+
+
+{url:'/cards/14435-grim-patron', img:'http://media-Hearth.cursecdn.com/avatars/197/999/14435.png', name:"Grim Patron"},
+
+
+{url:'/cards/624-gurubashi-berserker', img:'http://media-Hearth.cursecdn.com/avatars/148/334/624.png', name:"Gurubashi Berserker"},
+
+
+{url:'/cards/602-harrison-jones', img:'http://media-Hearth.cursecdn.com/avatars/148/437/602.png', name:"Harrison Jones"},
+
+
+{url:'/cards/22355-kvaldir-raider', img:'http://media-Hearth.cursecdn.com/avatars/252/284/22355.png', name:"Kvaldir Raider"},
+
+
+{url:'/cards/674-leeroy-jenkins', img:'http://media-Hearth.cursecdn.com/avatars/147/969/674.png', name:"Leeroy Jenkins"},
+
+
+{url:'/cards/22318-muklas-champion', img:'http://media-Hearth.cursecdn.com/avatars/252/226/22318.png', name:"Mukla's Champion"},
+
+
+{url:'/cards/27231-naga-sea-witch', img:'http://media-Hearth.cursecdn.com/avatars/272/361/27231.png', name:"Naga Sea Witch"},
+
+
+{url:'/cards/22264-nexus-champion-saraad', img:'http://media-Hearth.cursecdn.com/avatars/252/298/22264.png', name:"Nexus-Champion Saraad"},
+
+
+{url:'/cards/184-nightblade', img:'http://media-Hearth.cursecdn.com/avatars/148/519/184.png', name:"Nightblade"},
+
+
+{url:'/cards/22375-pit-fighter', img:'http://media-Hearth.cursecdn.com/avatars/252/250/22375.png', name:"Pit Fighter"},
+
+
+{url:'/cards/22344-ram-wrangler', img:'http://media-Hearth.cursecdn.com/avatars/252/480/22344.png', name:"Ram Wrangler"},
+
+
+{url:'/cards/22367-recruiter', img:'http://media-Hearth.cursecdn.com/avatars/252/272/22367.png', name:"Recruiter"},
+
+
+{url:'/cards/22305-shado-pan-rider', img:'http://media-Hearth.cursecdn.com/avatars/252/535/22430.png', name:"Shado-Pan Rider"},
+
+
+{url:'/cards/648-silver-hand-knight', img:'http://media-Hearth.cursecdn.com/avatars/147/616/648.png', name:"Silver Hand Knight"},
+
+
+{url:'/cards/627-spiteful-smith', img:'http://media-Hearth.cursecdn.com/avatars/147/685/627.png', name:"Spiteful Smith"},
+
+
+{url:'/cards/389-stampeding-kodo', img:'http://media-Hearth.cursecdn.com/avatars/149/566/389.png', name:"Stampeding Kodo"},
+
+
+{url:'/cards/101-starving-buzzard', img:'http://media-Hearth.cursecdn.com/avatars/147/716/101.png', name:"Starving Buzzard"},
+
+
+{url:'/cards/325-stormpike-commando', img:'http://media-Hearth.cursecdn.com/avatars/147/613/325.png', name:"Stormpike Commando"},
+
+
+{url:'/cards/338-stranglethorn-tiger', img:'http://media-Hearth.cursecdn.com/avatars/147/848/338.png', name:"Stranglethorn Tiger"},
+
+
+{url:'/cards/27239-summoning-stone', img:'http://media-Hearth.cursecdn.com/avatars/272/397/27239.png', name:"Summoning Stone"},
+
+
+{url:'/cards/22271-thunder-bluff-valiant', img:'http://media-Hearth.cursecdn.com/avatars/252/364/22271.png', name:"Thunder Bluff Valiant"},
+
+
+{url:'/cards/162-tundra-rhino', img:'http://media-Hearth.cursecdn.com/avatars/147/754/162.png', name:"Tundra Rhino"},
+
+
+{url:'/cards/22315-tuskarr-jouster', img:'http://media-Hearth.cursecdn.com/avatars/285/272/635951438966289129.png', name:"Tuskarr Jouster"},
+
+
+{url:'/cards/509-venture-co-mercenary', img:'http://media-Hearth.cursecdn.com/avatars/147/694/509.png', name:"Venture Co. Mercenary"},
+
+
+{url:'/cards/572-ancient-brewmaster', img:'http://media-Hearth.cursecdn.com/avatars/147/891/572.png', name:"Ancient Brewmaster"},
+
+
+{url:'/cards/176-ancient-mage', img:'http://media-Hearth.cursecdn.com/avatars/148/503/176.png', name:"Ancient Mage"},
+
+
+{url:'/cards/27245-ancient-shade', img:'http://media-Hearth.cursecdn.com/avatars/272/415/27245.png', name:"Ancient Shade"},
+
+
+{url:'/cards/27252-animated-armor', img:'http://media-Hearth.cursecdn.com/avatars/272/433/27252.png', name:"Animated Armor"},
+
+
+{url:'/cards/504-arathi-weaponsmith', img:'http://media-Hearth.cursecdn.com/avatars/148/328/504.png', name:"Arathi Weaponsmith"},
+
+
+{url:'/cards/22312-armored-warhorse', img:'http://media-Hearth.cursecdn.com/avatars/252/262/22312.png', name:"Armored Warhorse"},
+
+
+{url:'/cards/656-auchenai-soulpriest', img:'http://media-Hearth.cursecdn.com/avatars/148/516/656.png', name:"Auchenai Soulpriest"},
+
+
+{url:'/cards/14439-axe-flinger', img:'http://media-Hearth.cursecdn.com/avatars/197/990/14439.png', name:"Axe Flinger"},
+
+
+{url:'/cards/31-chillwind-yeti', img:'http://media-Hearth.cursecdn.com/avatars/147/652/31.png', name:"Chillwind Yeti"},
+
+
+{url:'/cards/14444-core-rager', img:'http://media-Hearth.cursecdn.com/avatars/197/984/14444.png', name:"Core Rager"},
+
+
+{url:'/cards/22308-crowd-favorite', img:'http://media-Hearth.cursecdn.com/avatars/252/288/22308.png', name:"Crowd Favorite"},
+
+
+{url:'/cards/140-cult-master', img:'http://media-Hearth.cursecdn.com/avatars/148/526/140.png', name:"Cult Master"},
+
+
+{url:'/cards/22359-dalaran-aspirant', img:'http://media-Hearth.cursecdn.com/avatars/252/468/22359.png', name:"Dalaran Aspirant"},
+
+
+{url:'/cards/128-dark-iron-dwarf', img:'http://media-Hearth.cursecdn.com/avatars/147/871/128.png', name:"Dark Iron Dwarf"},
+
+
+{url:'/cards/542-defender-of-argus', img:'http://media-Hearth.cursecdn.com/avatars/147/936/542.png', name:"Defender of Argus"},
+
+
+{url:'/cards/22269-draenei-totemcarver', img:'http://media-Hearth.cursecdn.com/avatars/252/360/22269.png', name:"Draenei Totemcarver"},
+
+
+{url:'/cards/14441-dragonkin-sorcerer', img:'http://media-Hearth.cursecdn.com/avatars/198/2/14441.png', name:"Dragonkin Sorcerer"},
+
+
+{url:'/cards/472-dragonling-mechanic', img:'http://media-Hearth.cursecdn.com/avatars/147/842/472.png', name:"Dragonling Mechanic"},
+
+
+{url:'/cards/261-dread-corsair', img:'http://media-Hearth.cursecdn.com/avatars/149/511/261.png', name:"Dread Corsair"},
+
+
+{url:'/cards/22337-dreadsteed', img:'http://media-Hearth.cursecdn.com/avatars/252/507/22337.png', name:"Dreadsteed"},
+
+
+{url:'/cards/27233-eerie-statue', img:'http://media-Hearth.cursecdn.com/avatars/272/412/27233.png', name:"Eerie Statue"},
+
+
+{url:'/cards/27210-elise-starseeker', img:'http://media-Hearth.cursecdn.com/avatars/272/394/27210.png', name:"Elise Starseeker"},
+
+
+{url:'/cards/125-ethereal-arcanist', img:'http://media-Hearth.cursecdn.com/avatars/148/154/125.png', name:"Ethereal Arcanist"},
+
+
+{url:'/cards/22390-evil-heckler', img:'http://media-Hearth.cursecdn.com/avatars/252/274/22390.png', name:"Evil Heckler"},
+
+
+{url:'/cards/14455-fireguard-destroyer', img:'http://media-Hearth.cursecdn.com/avatars/197/978/14455.png', name:"Fireguard Destroyer"},
+
+
+{url:'/cards/22381-frigid-snobold', img:'http://media-Hearth.cursecdn.com/avatars/252/232/22381.png', name:"Frigid Snobold"},
+
+
+{url:'/cards/246-gnomish-inventor', img:'http://media-Hearth.cursecdn.com/avatars/147/610/246.png', name:"Gnomish Inventor"},
+
+
+{url:'/cards/27237-gorillabot-a-3', img:'http://media-Hearth.cursecdn.com/avatars/272/364/27237.png', name:"Gorillabot A-3"},
+
+
+{url:'/cards/22323-gormok-the-impaler', img:'http://media-Hearth.cursecdn.com/avatars/252/290/22323.png', name:"Gormok the Impaler"},
+
+
+{url:'/cards/22287-holy-champion', img:'http://media-Hearth.cursecdn.com/avatars/252/483/22287.png', name:"Holy Champion"},
+
+
+{url:'/cards/225-houndmaster', img:'http://media-Hearth.cursecdn.com/avatars/147/748/225.png', name:"Houndmaster"},
+
+
+{url:'/cards/14436-hungry-dragon', img:'http://media-Hearth.cursecdn.com/avatars/198/17/14436.png', name:"Hungry Dragon"},
+
+
+{url:'/cards/27236-jungle-moonkin', img:'http://media-Hearth.cursecdn.com/avatars/272/376/27236.png', name:"Jungle Moonkin"},
+
+
+{url:'/cards/459-keeper-of-the-grove', img:'http://media-Hearth.cursecdn.com/avatars/148/88/459.png', name:"Keeper of the Grove"},
+
+
+{url:'/cards/27260-keeper-of-uldaman', img:'http://media-Hearth.cursecdn.com/avatars/272/331/27260.png', name:"Keeper of Uldaman"},
+
+
+{url:'/cards/130-korkron-elite', img:'http://media-Hearth.cursecdn.com/avatars/149/481/130.png', name:"Kor'kron Elite"},
+
+
+{url:'/cards/192-lightspawn', img:'http://media-Hearth.cursecdn.com/avatars/148/253/192.png', name:"Lightspawn"},
+
+
+{url:'/cards/22376-magnataur-alpha', img:'http://media-Hearth.cursecdn.com/avatars/252/404/22376.png', name:"Magnataur Alpha"},
+
+
+{url:'/cards/22259-maiden-of-the-lake', img:'http://media-Hearth.cursecdn.com/avatars/252/216/22259.png', name:"Maiden of the Lake"},
+
+
+{url:'/cards/127-master-of-disguise', img:'http://media-Hearth.cursecdn.com/avatars/149/487/127.png', name:"Master of Disguise"},
+
+
+{url:'/cards/346-mogushan-warden', img:'http://media-Hearth.cursecdn.com/avatars/148/325/346.png', name:"Mogu'shan Warden"},
+
+
+{url:'/cards/22362-murloc-knight', img:'http://media-Hearth.cursecdn.com/avatars/252/422/22362.png', name:"Murloc Knight"},
+
+
+{url:'/cards/15-oasis-snapjaw', img:'http://media-Hearth.cursecdn.com/avatars/147/577/15.png', name:"Oasis Snapjaw"},
+
+
+{url:'/cards/659-ogre-magi', img:'http://media-Hearth.cursecdn.com/avatars/147/670/659.png', name:"Ogre Magi"},
+
+
+{url:'/cards/217-old-murk-eye', img:'http://media-Hearth.cursecdn.com/avatars/147/900/217.png', name:"Old Murk-Eye"},
+
+
+{url:'/cards/402-pit-lord', img:'http://media-Hearth.cursecdn.com/avatars/148/217/402.png', name:"Pit Lord"},
+
+
+{url:'/cards/22374-refreshment-vendor', img:'http://media-Hearth.cursecdn.com/avatars/285/266/635951435067819939.png', name:"Refreshment Vendor"},
+
+
+{url:'/cards/27244-rumbling-elemental', img:'http://media-Hearth.cursecdn.com/avatars/272/328/27244.png', name:"Rumbling Elemental"},
+
+
+{url:'/cards/22293-savage-combatant', img:'http://media-Hearth.cursecdn.com/avatars/252/583/22293.png', name:"Savage Combatant"},
+
+
+{url:'/cards/326-senjin-shieldmasta', img:'http://media-Hearth.cursecdn.com/avatars/147/646/326.png', name:"Sen'jin Shieldmasta"},
+
+
+{url:'/cards/634-silvermoon-guardian', img:'http://media-Hearth.cursecdn.com/avatars/147/839/634.png', name:"Silvermoon Guardian"},
+
+
+{url:'/cards/22357-spawn-of-shadows', img:'http://media-Hearth.cursecdn.com/avatars/252/486/22357.png', name:"Spawn of Shadows"},
+
+
+{url:'/cards/42-spellbreaker', img:'http://media-Hearth.cursecdn.com/avatars/147/874/42.png', name:"Spellbreaker"},
+
+
+{url:'/cards/603-stormwind-knight', img:'http://media-Hearth.cursecdn.com/avatars/147/598/603.png', name:"Stormwind Knight"},
+
+
+{url:'/cards/566-summoning-portal', img:'http://media-Hearth.cursecdn.com/avatars/148/220/566.png', name:"Summoning Portal"},
+
+
+{url:'/cards/27229-tomb-pillager', img:'http://media-Hearth.cursecdn.com/avatars/272/325/27229.png', name:"Tomb Pillager"},
+
+
+{url:'/cards/27226-tomb-spider', img:'http://media-Hearth.cursecdn.com/avatars/272/370/27226.png', name:"Tomb Spider"},
+
+
+{url:'/cards/22290-tournament-medic', img:'http://media-Hearth.cursecdn.com/avatars/252/228/22290.png', name:"Tournament Medic"},
+
+
+{url:'/cards/360-twilight-drake', img:'http://media-Hearth.cursecdn.com/avatars/147/862/360.png', name:"Twilight Drake"},
+
+
+{url:'/cards/22351-twilight-guardian', img:'http://media-Hearth.cursecdn.com/avatars/252/501/22351.png', name:"Twilight Guardian"},
+
+
+{url:'/cards/523-violet-teacher', img:'http://media-Hearth.cursecdn.com/avatars/149/523/523.png', name:"Violet Teacher"},
+
+
+{url:'/cards/274-water-elemental', img:'http://media-Hearth.cursecdn.com/avatars/147/438/274.png', name:"Water Elemental"},
+
+
+{url:'/cards/22361-wildwalker', img:'http://media-Hearth.cursecdn.com/avatars/252/586/22361.png', name:"Wildwalker"},
+
+
+{url:'/cards/151-windspeaker', img:'http://media-Hearth.cursecdn.com/avatars/148/510/151.png', name:"Windspeaker"},
+
+//page 3
+
+{url:'/cards/428-acolyte-of-pain', img:'http://media-Hearth.cursecdn.com/avatars/147/795/428.png', name:"Acolyte of Pain"},
+
+
+{url:'/cards/425-alarm-o-bot', img:'http://media-Hearth.cursecdn.com/avatars/147/792/425.png', name:"Alarm-o-Bot"},
+
+
+{url:'/cards/23-aldor-peacekeeper', img:'http://media-Hearth.cursecdn.com/avatars/148/301/23.png', name:"Aldor Peacekeeper"},
+
+
+{url:'/cards/97-arcane-golem', img:'http://media-Hearth.cursecdn.com/avatars/147/930/97.png', name:"Arcane Golem"},
+
+
+{url:'/cards/22301-argent-horserider', img:'http://media-Hearth.cursecdn.com/avatars/252/220/22301.png', name:"Argent Horserider"},
+
+
+{url:'/cards/73-big-game-hunter', img:'http://media-Hearth.cursecdn.com/avatars/285/238/635951426156132028.png', name:"Big Game Hunter"},
+
+
+{url:'/cards/14437-blackwing-technician', img:'http://media-Hearth.cursecdn.com/avatars/198/47/14437.png', name:"Blackwing Technician"},
+
+
+{url:'/cards/75-blood-knight', img:'http://media-Hearth.cursecdn.com/avatars/148/513/75.png', name:"Blood Knight"},
+
+
+{url:'/cards/27214-brann-bronzebeard', img:'http://media-Hearth.cursecdn.com/avatars/272/391/27214.png', name:"Brann Bronzebeard"},
+
+
+{url:'/cards/88-coldlight-oracle', img:'http://media-Hearth.cursecdn.com/avatars/147/885/88.png', name:"Coldlight Oracle"},
+
+
+{url:'/cards/424-coldlight-seer', img:'http://media-Hearth.cursecdn.com/avatars/147/954/424.png', name:"Coldlight Seer"},
+
+
+{url:'/cards/22291-coliseum-manager', img:'http://media-Hearth.cursecdn.com/avatars/252/266/22291.png', name:"Coliseum Manager"},
+
+
+{url:'/cards/388-dalaran-mage', img:'http://media-Hearth.cursecdn.com/avatars/148/497/388.png', name:"Dalaran Mage"},
+
+
+{url:'/cards/212-demolisher', img:'http://media-Hearth.cursecdn.com/avatars/147/951/212.png', name:"Demolisher"},
+
+
+{url:'/cards/27251-desert-camel', img:'http://media-Hearth.cursecdn.com/avatars/272/340/27251.png', name:"Desert Camel"},
+
+
+{url:'/cards/22369-dragonhawk-rider', img:'http://media-Hearth.cursecdn.com/avatars/252/212/22369.png', name:"Dragonhawk Rider"},
+
+
+{url:'/cards/22389-dreadscale', img:'http://media-Hearth.cursecdn.com/avatars/252/396/22389.png', name:"Dreadscale"},
+
+
+{url:'/cards/14457-druid-of-the-flame', img:'http://media-Hearth.cursecdn.com/avatars/197/960/14457.png', name:"Druid of the Flame"},
+
+
+{url:'/cards/557-earthen-ring-farseer', img:'http://media-Hearth.cursecdn.com/avatars/147/570/557.png', name:"Earthen Ring Farseer"},
+
+
+{url:'/cards/3-edwin-vancleef', img:'http://media-Hearth.cursecdn.com/avatars/148/565/3.png', name:"Edwin VanCleef"},
+
+
+{url:'/cards/625-emperor-cobra', img:'http://media-Hearth.cursecdn.com/avatars/148/100/625.png', name:"Emperor Cobra"},
+
+
+{url:'/cards/22295-eydis-darkbane', img:'http://media-Hearth.cursecdn.com/avatars/252/306/22295.png', name:"Eydis Darkbane"},
+
+
+{url:'/cards/236-felguard', img:'http://media-Hearth.cursecdn.com/avatars/148/190/236.png', name:"Felguard"},
+
+
+{url:'/cards/22378-fencing-coach', img:'http://media-Hearth.cursecdn.com/avatars/252/276/22378.png', name:"Fencing Coach"},
+
+
+{url:'/cards/27255-fierce-monkey', img:'http://media-Hearth.cursecdn.com/avatars/272/346/27255.png', name:"Fierce Monkey"},
+
+
+{url:'/cards/22296-fjola-lightbane', img:'http://media-Hearth.cursecdn.com/avatars/252/302/22296.png', name:"Fjola Lightbane"},
+
+
+{url:'/cards/14445-flamewaker', img:'http://media-Hearth.cursecdn.com/avatars/197/930/14445.png', name:"Flamewaker"},
+
+
+{url:'/cards/610-flesheating-ghoul', img:'http://media-Hearth.cursecdn.com/avatars/149/608/610.png', name:"Flesheating Ghoul"},
+
+
+{url:'/cards/69-frothing-berserker', img:'http://media-Hearth.cursecdn.com/avatars/148/541/69.png', name:"Frothing Berserker"},
+
+
+{url:'/cards/386-harvest-golem', img:'http://media-Hearth.cursecdn.com/avatars/148/430/386.png', name:"Harvest Golem"},
+
+
+{url:'/cards/22392-ice-rager', img:'http://media-Hearth.cursecdn.com/avatars/252/230/22392.png', name:"Ice Rager"},
+
+
+{url:'/cards/14443-imp-gang-boss', img:'http://media-Hearth.cursecdn.com/avatars/197/945/14443.png', name:"Imp Gang Boss"},
+
+
+{url:'/cards/178-imp-master', img:'http://media-Hearth.cursecdn.com/avatars/148/532/178.png', name:"Imp Master"},
+
+
+{url:'/cards/209-injured-blademaster', img:'http://media-Hearth.cursecdn.com/avatars/147/649/209.png', name:"Injured Blademaster"},
+
+
+{url:'/cards/41-ironforge-rifleman', img:'http://media-Hearth.cursecdn.com/avatars/147/601/41.png', name:"Ironforge Rifleman"},
+
+
+{url:'/cards/519-ironfur-grizzly', img:'http://media-Hearth.cursecdn.com/avatars/147/592/519.png', name:"Ironfur Grizzly"},
+
+
+{url:'/cards/392-jungle-panther', img:'http://media-Hearth.cursecdn.com/avatars/147/826/392.png', name:"Jungle Panther"},
+
+
+{url:'/cards/373-king-mukla', img:'http://media-Hearth.cursecdn.com/avatars/147/814/373.png', name:"King Mukla"},
+
+
+{url:'/cards/411-kirin-tor-mage', img:'http://media-Hearth.cursecdn.com/avatars/148/562/411.png', name:"Kirin Tor Mage"},
+
+
+{url:'/cards/22341-lights-champion', img:'http://media-Hearth.cursecdn.com/avatars/252/260/22341.png', name:"Light's Champion"},
+
+
+{url:'/cards/362-magma-rager', img:'http://media-Hearth.cursecdn.com/avatars/147/573/362.png', name:"Magma Rager"},
+
+
+{url:'/cards/613-mana-tide-totem', img:'http://media-Hearth.cursecdn.com/avatars/148/485/613.png', name:"Mana Tide Totem"},
+
+
+{url:'/cards/22306-master-of-ceremonies', img:'http://media-Hearth.cursecdn.com/avatars/252/280/22306.png', name:"Master of Ceremonies"},
+
+
+{url:'/cards/368-mind-control-tech', img:'http://media-Hearth.cursecdn.com/avatars/147/927/368.png', name:"Mind Control Tech"},
+
+
+{url:'/cards/27253-mounted-raptor', img:'http://media-Hearth.cursecdn.com/avatars/272/373/27253.png', name:"Mounted Raptor"},
+
+
+{url:'/cards/222-murloc-warleader', img:'http://media-Hearth.cursecdn.com/avatars/148/376/222.png', name:"Murloc Warleader"},
+
+
+{url:'/cards/22395-orgrimmar-aspirant', img:'http://media-Hearth.cursecdn.com/avatars/252/402/22395.png', name:"Orgrimmar Aspirant"},
+
+
+{url:'/cards/157-questing-adventurer', img:'http://media-Hearth.cursecdn.com/avatars/147/865/157.png', name:"Questing Adventurer"},
+
+
+{url:'/cards/95-raging-worgen', img:'http://media-Hearth.cursecdn.com/avatars/148/364/95.png', name:"Raging Worgen"},
+
+
+{url:'/cards/502-raid-leader', img:'http://media-Hearth.cursecdn.com/avatars/147/586/502.png', name:"Raid Leader"},
+
+
+{url:'/cards/47-razorfen-hunter', img:'http://media-Hearth.cursecdn.com/avatars/147/667/47.png', name:"Razorfen Hunter"},
+
+
+{url:'/cards/22366-saboteur', img:'http://media-Hearth.cursecdn.com/avatars/252/218/22366.png', name:"Saboteur"},
+
+
+{url:'/cards/475-scarlet-crusader', img:'http://media-Hearth.cursecdn.com/avatars/147/833/475.png', name:"Scarlet Crusader"},
+
+
+{url:'/cards/22356-shadowfiend', img:'http://media-Hearth.cursecdn.com/avatars/252/492/22356.png', name:"Shadowfiend"},
+
+
+{url:'/cards/22348-shady-dealer', img:'http://media-Hearth.cursecdn.com/avatars/252/547/22348.png', name:"Shady Dealer"},
+
+
+{url:'/cards/434-shattered-sun-cleric', img:'http://media-Hearth.cursecdn.com/avatars/147/829/434.png', name:"Shattered Sun Cleric"},
+
+
+{url:'/cards/286-si-7-agent', img:'http://media-Hearth.cursecdn.com/avatars/148/5/286.png', name:"SI:7 Agent"},
+
+
+{url:'/cards/22297-silent-knight', img:'http://media-Hearth.cursecdn.com/avatars/252/236/22297.png', name:"Silent Knight"},
+
+
+{url:'/cards/22275-silver-hand-regent', img:'http://media-Hearth.cursecdn.com/avatars/252/248/22275.png', name:"Silver Hand Regent"},
+
+
+{url:'/cards/611-silverback-patriarch', img:'http://media-Hearth.cursecdn.com/avatars/147/595/611.png', name:"Silverback Patriarch"},
+
+
+{url:'/cards/324-southsea-captain', img:'http://media-Hearth.cursecdn.com/avatars/149/529/324.png', name:"Southsea Captain"},
+
+
+{url:'/cards/22299-spellslinger', img:'http://media-Hearth.cursecdn.com/avatars/252/471/22299.png', name:"Spellslinger"},
+
+
+{url:'/cards/22365-stablemaster', img:'http://media-Hearth.cursecdn.com/avatars/252/382/22365.png', name:"Stablemaster"},
+
+
+{url:'/cards/477-tauren-warrior', img:'http://media-Hearth.cursecdn.com/avatars/148/313/477.png', name:"Tauren Warrior"},
+
+
+{url:'/cards/265-thrallmar-farseer', img:'http://media-Hearth.cursecdn.com/avatars/147/836/265.png', name:"Thrallmar Farseer"},
+
+
+{url:'/cards/245-tinkmaster-overspark', img:'http://media-Hearth.cursecdn.com/avatars/147/920/245.png', name:"Tinkmaster Overspark"},
+
+
+{url:'/cards/22270-tuskarr-totemic', img:'http://media-Hearth.cursecdn.com/avatars/252/358/22270.png', name:"Tuskarr Totemic"},
+
+
+{url:'/cards/51-unbound-elemental', img:'http://media-Hearth.cursecdn.com/avatars/148/148/51.png', name:"Unbound Elemental"},
+
+
+{url:'/cards/27220-unearthed-raptor', img:'http://media-Hearth.cursecdn.com/avatars/272/337/27220.png', name:"Unearthed Raptor"},
+
+
+{url:'/cards/119-void-terror', img:'http://media-Hearth.cursecdn.com/avatars/148/199/119.png', name:"Void Terror"},
+
+
+{url:'/cards/22330-warhorse-trainer', img:'http://media-Hearth.cursecdn.com/avatars/252/420/22330.png', name:"Warhorse Trainer"},
+
+
+{url:'/cards/193-warsong-commander', img:'http://media-Hearth.cursecdn.com/avatars/269/358/193.png', name:"Warsong Commander"},
+
+
+{url:'/cards/174-wolfrider', img:'http://media-Hearth.cursecdn.com/avatars/147/589/174.png', name:"Wolfrider"},
+
+
+{url:'/cards/74-acidic-swamp-ooze', img:'http://media-Hearth.cursecdn.com/avatars/285/234/635951425116836347.png', name:"Acidic Swamp Ooze"},
+
+
+{url:'/cards/22333-alexstraszas-champion', img:'http://media-Hearth.cursecdn.com/avatars/252/412/22333.png', name:"Alexstrasza's Champion"},
+
+
+{url:'/cards/641-amani-berserker', img:'http://media-Hearth.cursecdn.com/avatars/148/322/641.png', name:"Amani Berserker"},
+
+
+{url:'/cards/153-ancient-watcher', img:'http://media-Hearth.cursecdn.com/avatars/147/868/153.png', name:"Ancient Watcher"},
+
+
+{url:'/cards/191-argent-protector', img:'http://media-Hearth.cursecdn.com/avatars/148/283/191.png', name:"Argent Protector"},
+
+
+{url:'/cards/22298-argent-watchman', img:'http://media-Hearth.cursecdn.com/avatars/252/264/22298.png', name:"Argent Watchman"},
+
+
+{url:'/cards/644-armorsmith', img:'http://media-Hearth.cursecdn.com/avatars/148/340/644.png', name:"Armorsmith"},
+
+
+{url:'/cards/576-bloodfen-raptor', img:'http://media-Hearth.cursecdn.com/avatars/147/640/576.png', name:"Bloodfen Raptor"},
+
+
+{url:'/cards/525-bloodmage-thalnos', img:'http://media-Hearth.cursecdn.com/avatars/147/811/525.png', name:"Bloodmage Thalnos"},
+
+
+{url:'/cards/637-bloodsail-raider', img:'http://media-Hearth.cursecdn.com/avatars/149/499/637.png', name:"Bloodsail Raider"},
+
+
+{url:'/cards/289-bluegill-warrior', img:'http://media-Hearth.cursecdn.com/avatars/147/643/289.png', name:"Bluegill Warrior"},
+
+
+{url:'/cards/22352-boneguard-lieutenant', img:'http://media-Hearth.cursecdn.com/avatars/252/224/22352.png', name:"Boneguard Lieutenant"},
+
+
+{url:'/cards/559-captains-parrot', img:'http://media-Hearth.cursecdn.com/avatars/149/490/559.png', name:"Captain's Parrot"},
+
+
+{url:'/cards/612-crazed-alchemist', img:'http://media-Hearth.cursecdn.com/avatars/147/897/612.png', name:"Crazed Alchemist"},
+
+
+{url:'/cards/328-cruel-taskmaster', img:'http://media-Hearth.cursecdn.com/avatars/148/538/328.png', name:"Cruel Taskmaster"},
+
+
+{url:'/cards/22336-cutpurse', img:'http://media-Hearth.cursecdn.com/avatars/252/544/22336.png', name:"Cutpurse"},
+
+
+{url:'/cards/27243-dark-peddler', img:'http://media-Hearth.cursecdn.com/avatars/272/349/27243.png', name:"Dark Peddler"},
+
+
+{url:'/cards/22303-darnassus-aspirant', img:'http://media-Hearth.cursecdn.com/avatars/252/580/22303.png', name:"Darnassus Aspirant"},
+
+
+{url:'/cards/417-defias-ringleader', img:'http://media-Hearth.cursecdn.com/avatars/147/993/417.png', name:"Defias Ringleader"},
+
+
+{url:'/cards/305-dire-wolf-alpha', img:'http://media-Hearth.cursecdn.com/avatars/148/60/305.png', name:"Dire Wolf Alpha"},
+
+
+{url:'/cards/467-doomsayer', img:'http://media-Hearth.cursecdn.com/avatars/149/508/467.png', name:"Doomsayer"},
+
+
+{url:'/cards/22307-druid-of-the-saber', img:'http://media-Hearth.cursecdn.com/avatars/252/342/22307.png', name:"Druid of the Saber"},
+
+
+{url:'/cards/213-faerie-dragon', img:'http://media-Hearth.cursecdn.com/avatars/149/514/213.png', name:"Faerie Dragon"},
+
+
+{url:'/cards/22268-fallen-hero', img:'http://media-Hearth.cursecdn.com/avatars/252/456/22268.png', name:"Fallen Hero"},
+
+
+{url:'/cards/22292-flame-juggler', img:'http://media-Hearth.cursecdn.com/avatars/252/234/22292.png', name:"Flame Juggler"},
+
+
+{url:'/cards/390-flametongue-totem', img:'http://media-Hearth.cursecdn.com/avatars/148/458/390.png', name:"Flametongue Totem"},
+
+
+{url:'/cards/663-frostwolf-grunt', img:'http://media-Hearth.cursecdn.com/avatars/147/583/663.png', name:"Frostwolf Grunt"},
+
+//page 4
+
+{url:'/cards/22274-garrison-commander', img:'http://media-Hearth.cursecdn.com/avatars/252/430/22274.png', name:"Garrison Commander"},
+
+
+{url:'/cards/27219-huge-toad', img:'http://media-Hearth.cursecdn.com/avatars/285/249/635951427946440115.png', name:"Huge Toad"},
+
+
+{url:'/cards/500-ironbeak-owl', img:'http://media-Hearth.cursecdn.com/avatars/285/251/635951428442880421.png', name:"Ironbeak Owl"},
+
+
+{url:'/cards/27211-jeweled-scarab', img:'http://media-Hearth.cursecdn.com/avatars/272/358/27211.png', name:"Jeweled Scarab"},
+
+
+{url:'/cards/22370-kings-elekk', img:'http://media-Hearth.cursecdn.com/avatars/252/384/22370.png', name:"King's Elekk"},
+
+
+{url:'/cards/422-knife-juggler', img:'http://media-Hearth.cursecdn.com/avatars/149/502/422.png', name:"Knife Juggler"},
+
+
+{url:'/cards/479-kobold-geomancer', img:'http://media-Hearth.cursecdn.com/avatars/147/604/479.png', name:"Kobold Geomancer"},
+
+
+{url:'/cards/22335-lance-carrier', img:'http://media-Hearth.cursecdn.com/avatars/252/214/22468.png', name:"Lance Carrier"},
+
+
+{url:'/cards/117-lightwell', img:'http://media-Hearth.cursecdn.com/avatars/285/254/635951428914848376.png', name:"Lightwell"},
+
+
+{url:'/cards/395-loot-hoarder', img:'http://media-Hearth.cursecdn.com/avatars/147/942/395.png', name:"Loot Hoarder"},
+
+
+{url:'/cards/456-lorewalker-cho', img:'http://media-Hearth.cursecdn.com/avatars/147/948/456.png', name:"Lorewalker Cho"},
+
+
+{url:'/cards/80-mad-bomber', img:'http://media-Hearth.cursecdn.com/avatars/147/917/80.png', name:"Mad Bomber"},
+
+
+{url:'/cards/67-mana-addict', img:'http://media-Hearth.cursecdn.com/avatars/147/888/67.png', name:"Mana Addict"},
+
+
+{url:'/cards/197-mana-wraith', img:'http://media-Hearth.cursecdn.com/avatars/148/575/197.png', name:"Mana Wraith"},
+
+
+{url:'/cards/584-master-swordsmith', img:'http://media-Hearth.cursecdn.com/avatars/149/554/584.png', name:"Master Swordsmith"},
+
+
+{url:'/cards/339-millhouse-manastorm', img:'http://media-Hearth.cursecdn.com/avatars/149/532/339.png', name:"Millhouse Manastorm"},
+
+
+{url:'/cards/357-murloc-tidehunter', img:'http://media-Hearth.cursecdn.com/avatars/148/370/357.png', name:"Murloc Tidehunter"},
+
+
+{url:'/cards/27250-museum-curator', img:'http://media-Hearth.cursecdn.com/avatars/272/310/27250.png', name:"Museum Curator"},
+
+
+{url:'/cards/19-nat-pagle', img:'http://media-Hearth.cursecdn.com/avatars/148/433/19.png', name:"Nat Pagle"},
+
+
+{url:'/cards/435-novice-engineer', img:'http://media-Hearth.cursecdn.com/avatars/147/820/435.png', name:"Novice Engineer"},
+
+
+{url:'/cards/14-patient-assassin', img:'http://media-Hearth.cursecdn.com/avatars/148/385/14.png', name:"Patient Assassin"},
+
+
+{url:'/cards/54-pint-sized-summoner', img:'http://media-Hearth.cursecdn.com/avatars/147/911/54.png', name:"Pint-Sized Summoner"},
+
+
+{url:'/cards/535-river-crocolisk', img:'http://media-Hearth.cursecdn.com/avatars/147/580/535.png', name:"River Crocolisk"},
+
+
+{url:'/cards/279-scavenging-hyena', img:'http://media-Hearth.cursecdn.com/avatars/148/388/279.png', name:"Scavenging Hyena"},
+
+
+{url:'/cards/4-sorcerers-apprentice', img:'http://media-Hearth.cursecdn.com/avatars/148/550/4.png', name:"Sorcerer's Apprentice"},
+
+
+{url:'/cards/22354-sparring-partner', img:'http://media-Hearth.cursecdn.com/avatars/252/408/22354.png', name:"Sparring Partner"},
+
+
+{url:'/cards/208-succubus', img:'http://media-Hearth.cursecdn.com/avatars/148/202/208.png', name:"Succubus"},
+
+
+{url:'/cards/372-sunfury-protector', img:'http://media-Hearth.cursecdn.com/avatars/147/894/372.png', name:"Sunfury Protector"},
+
+
+{url:'/cards/22386-tiny-knight-of-evil', img:'http://media-Hearth.cursecdn.com/avatars/252/513/22386.png', name:"Tiny Knight of Evil"},
+
+
+{url:'/cards/22265-totem-golem', img:'http://media-Hearth.cursecdn.com/avatars/252/372/22265.png', name:"Totem Golem"},
+
+
+{url:'/cards/22371-undercity-valiant', img:'http://media-Hearth.cursecdn.com/avatars/252/541/22371.png', name:"Undercity Valiant"},
+
+
+{url:'/cards/25-wild-pyromancer', img:'http://media-Hearth.cursecdn.com/avatars/149/505/25.png', name:"Wild Pyromancer"},
+
+
+{url:'/cards/22304-wrathguard', img:'http://media-Hearth.cursecdn.com/avatars/252/529/22304.png', name:"Wrathguard"},
+
+
+{url:'/cards/22398-wyrmrest-agent', img:'http://media-Hearth.cursecdn.com/avatars/252/278/22398.png', name:"Wyrmrest Agent"},
+
+
+{url:'/cards/247-youthful-brewmaster', img:'http://media-Hearth.cursecdn.com/avatars/147/878/247.png', name:"Youthful Brewmaster"},
+
+
+{url:'/cards/577-abusive-sergeant', img:'http://media-Hearth.cursecdn.com/avatars/147/661/577.png', name:"Abusive Sergeant"},
+
+
+{url:'/cards/57-angry-chicken', img:'http://media-Hearth.cursecdn.com/avatars/147/801/57.png', name:"Angry Chicken"},
+
+
+{url:'/cards/473-argent-squire', img:'http://media-Hearth.cursecdn.com/avatars/147/798/473.png', name:"Argent Squire"},
+
+
+{url:'/cards/196-blood-imp', img:'http://media-Hearth.cursecdn.com/avatars/147/477/196.png', name:"Blood Imp"},
+
+
+{url:'/cards/453-bloodsail-corsair', img:'http://media-Hearth.cursecdn.com/avatars/149/520/453.png', name:"Bloodsail Corsair"},
+
+
+{url:'/cards/22310-brave-archer', img:'http://media-Hearth.cursecdn.com/avatars/252/386/22453.png', name:"Brave Archer"},
+
+
+{url:'/cards/22347-buccaneer', img:'http://media-Hearth.cursecdn.com/avatars/252/538/22347.png', name:"Buccaneer"},
+
+
+{url:'/cards/14442-dragon-egg', img:'http://media-Hearth.cursecdn.com/avatars/198/5/14442.png', name:"Dragon Egg"},
+
+
+{url:'/cards/129-dust-devil', img:'http://media-Hearth.cursecdn.com/avatars/148/121/129.png', name:"Dust Devil"},
+
+
+{url:'/cards/356-elven-archer', img:'http://media-Hearth.cursecdn.com/avatars/147/664/356.png', name:"Elven Archer"},
+
+
+{url:'/cards/85-flame-imp', img:'http://media-Hearth.cursecdn.com/avatars/285/247/635951427701738996.png', name:"Flame Imp"},
+
+
+{url:'/cards/22311-gadgetzan-jouster', img:'http://media-Hearth.cursecdn.com/avatars/252/338/22311.png', name:"Gadgetzan Jouster"},
+
+
+{url:'/cards/564-goldshire-footman', img:'http://media-Hearth.cursecdn.com/avatars/147/360/564.png', name:"Goldshire Footman"},
+
+
+{url:'/cards/510-grimscale-oracle', img:'http://media-Hearth.cursecdn.com/avatars/148/379/510.png', name:"Grimscale Oracle"},
+
+
+{url:'/cards/660-hungry-crab', img:'http://media-Hearth.cursecdn.com/avatars/149/495/660.png', name:"Hungry Crab"},
+
+
+{url:'/cards/22322-injured-kvaldir', img:'http://media-Hearth.cursecdn.com/avatars/252/258/22322.png', name:"Injured Kvaldir"},
+
+
+{url:'/cards/513-leper-gnome', img:'http://media-Hearth.cursecdn.com/avatars/285/252/635951428655436704.png', name:"Leper Gnome"},
+
+
+{url:'/cards/436-lightwarden', img:'http://media-Hearth.cursecdn.com/avatars/147/778/436.png', name:"Lightwarden"},
+
+
+{url:'/cards/22263-lowly-squire', img:'http://media-Hearth.cursecdn.com/avatars/252/210/22263.png', name:"Lowly Squire"},
+
+
+{url:'/cards/263-mana-wyrm', img:'http://media-Hearth.cursecdn.com/avatars/285/257/635951429504667282.png', name:"Mana Wyrm"},
+
+
+{url:'/cards/55-murloc-raider', img:'http://media-Hearth.cursecdn.com/avatars/147/631/55.png', name:"Murloc Raider"},
+
+
+{url:'/cards/420-murloc-tidecaller', img:'http://media-Hearth.cursecdn.com/avatars/148/382/420.png', name:"Murloc Tidecaller"},
+
+
+{url:'/cards/600-northshire-cleric', img:'http://media-Hearth.cursecdn.com/avatars/147/709/600.png', name:"Northshire Cleric"},
+
+
+{url:'/cards/27221-pit-snake', img:'http://media-Hearth.cursecdn.com/avatars/285/263/635951434310803211.png', name:"Pit Snake"},
+
+
+{url:'/cards/27256-reliquary-seeker', img:'http://media-Hearth.cursecdn.com/avatars/272/427/27256.png', name:"Reliquary Seeker"},
+
+
+{url:'/cards/483-secretkeeper', img:'http://media-Hearth.cursecdn.com/avatars/147/914/483.png', name:"Secretkeeper"},
+
+
+{url:'/cards/24-shieldbearer', img:'http://media-Hearth.cursecdn.com/avatars/148/343/24.png', name:"Shieldbearer"},
+
+
+{url:'/cards/27215-sir-finley-mrrgglton', img:'http://media-Hearth.cursecdn.com/avatars/285/268/635951436051687679.png', name:"Sir Finley Mrrgglton"},
+
+
+{url:'/cards/103-southsea-deckhand', img:'http://media-Hearth.cursecdn.com/avatars/147/607/103.png', name:"Southsea Deckhand"},
+
+
+{url:'/cards/76-stonetusk-boar', img:'http://media-Hearth.cursecdn.com/avatars/147/637/76.png', name:"Stonetusk Boar"},
+
+
+{url:'/cards/86-timber-wolf', img:'http://media-Hearth.cursecdn.com/avatars/147/751/86.png', name:"Timber Wolf"},
+
+
+{url:'/cards/22350-tournament-attendee', img:'http://media-Hearth.cursecdn.com/avatars/252/240/22350.png', name:"Tournament Attendee"},
+
+
+{url:'/cards/27246-tunnel-trogg', img:'http://media-Hearth.cursecdn.com/avatars/272/334/27246.png', name:"Tunnel Trogg"},
+
+
+{url:'/cards/14460-twilight-whelp', img:'http://media-Hearth.cursecdn.com/avatars/197/936/14460.png', name:"Twilight Whelp"},
+
+
+{url:'/cards/340-voidwalker', img:'http://media-Hearth.cursecdn.com/avatars/147/492/340.png', name:"Voidwalker"},
+
+
+{url:'/cards/410-voodoo-doctor', img:'http://media-Hearth.cursecdn.com/avatars/147/808/410.png', name:"Voodoo Doctor"},
+
+
+{url:'/cards/112-worgen-infiltrator', img:'http://media-Hearth.cursecdn.com/avatars/147/804/112.png', name:"Worgen Infiltrator"},
+
+
+{url:'/cards/629-young-dragonhawk', img:'http://media-Hearth.cursecdn.com/avatars/147/634/629.png', name:"Young Dragonhawk"},
+
+
+{url:'/cards/123-young-priestess', img:'http://media-Hearth.cursecdn.com/avatars/147/785/123.png', name:"Young Priestess"},
+
+
+{url:'/cards/27225-murloc-tinyfin', img:'http://media-Hearth.cursecdn.com/avatars/272/301/27225.png', name:"Murloc Tinyfin"},
+
+
+{url:'/cards/273-wisp', img:'http://media-Hearth.cursecdn.com/avatars/147/697/273.png', name:"Wisp"},
+
+//new cards
+
+
+{url:'/cards/31110-cthun', img:'http://media-Hearth.cursecdn.com/avatars/282/842/635933081757553708.png', name:"C'Thun"},
+
+
+{url:'/cards/33177-deathwing-dragonlord', img:'http://media-Hearth.cursecdn.com/avatars/286/257/635960666933956008.png', name:"Deathwing, Dragonlord"},
+
+
+{url:'/cards/33134-nzoth-the-corruptor', img:'http://media-Hearth.cursecdn.com/avatars/284/209/635944183173751475.png', name:"N'Zoth the Corruptor"},
+
+
+{url:'/cards/33168-yogg-saron-hopes-end', img:'http://media-Hearth.cursecdn.com/avatars/285/790/635956274163275533.gif', name:"Yogg-Saron, Hope's End"},
+
+
+{url:'/cards/33156-yshaarj-rage-unbound', img:'http://media-Hearth.cursecdn.com/avatars/284/989/635950234694988585.png', name:"Y'Shaarj, Rage Unbound"},
+
+
+{url:'/cards/33164-blood-of-the-ancient-one', img:'http://media-Hearth.cursecdn.com/avatars/285/628/635954556054082188.png', name:"Blood of The Ancient One"},
+
+
+{url:'/cards/33173-soggoth-the-slitherer', img:'http://media-Hearth.cursecdn.com/avatars/285/915/635957212928414301.png', name:"Soggoth the Slitherer"},
+
+
+{url:'/cards/31118-giant-sand-worm', img:'http://media-Hearth.cursecdn.com/avatars/284/238/635944392903507084.png', name:"Giant Sand Worm"},
+
+
+{url:'/cards/33147-ragnaros-lightlord', img:'http://media-Hearth.cursecdn.com/avatars/284/556/635947043480664519.png', name:"Ragnaros, Lightlord"},
+
+
+{url:'/cards/33138-the-boogeymonster', img:'http://media-Hearth.cursecdn.com/avatars/284/674/635947869442555402.png', name:"The Boogeymonster"},
+
+
+{url:'/cards/33122-ancient-shieldbearer', img:'http://media-Hearth.cursecdn.com/avatars/285/894/635957151332355413.png', name:"Ancient Shieldbearer"},
+
+
+{url:'/cards/33170-chogall', img:'http://media-Hearth.cursecdn.com/avatars/286/20/635958427979685729.png', name:"Cho'Gall"},
+
+
+{url:'/cards/31117-hogger-doom-of-elwynn', img:'http://media-Hearth.cursecdn.com/avatars/282/980/635934379451931489.png', name:"Hogger, Doom of Elwynn"},
+
+
+{url:'/cards/33157-ancient-harbinger', img:'http://media-Hearth.cursecdn.com/avatars/285/15/635950346206301209.png', name:"Ancient Harbinger"},
+
+
+{url:'/cards/35189-dark-arakkoa', img:'http://media-Hearth.cursecdn.com/avatars/286/762/635964857529480806.png', name:"Dark Arakkoa"},
+
+
+{url:'/cards/33178-faceless-summoner', img:'http://media-Hearth.cursecdn.com/avatars/286/359/635961663603699059.png', name:"Faceless Summoner"},
+
+
+{url:'/cards/33127-herald-volazj', img:'http://media-Hearth.cursecdn.com/avatars/283/824/635940749016966386.png', name:"Herald Volazj"},
+
+
+{url:'/cards/33149-mukla-tyrant-of-the-vale', img:'http://media-Hearth.cursecdn.com/avatars/284/789/635948704861228577.png', name:"Mukla, Tyrant of the Vale"},
+
+
+{url:'/cards/33152-scaled-nightmare', img:'http://media-Hearth.cursecdn.com/avatars/284/867/635949380983701287.png', name:"Scaled Nightmare"},
+
+
+{url:'/cards/33154-skeram-cultist', img:'http://media-Hearth.cursecdn.com/avatars/285/14/635950344334626942.png', name:"Skeram Cultist"},
+
+
+{url:'/cards/33159-thing-from-below', img:'http://media-Hearth.cursecdn.com/avatars/285/573/635953928849890235.png', name:"Thing from Below"},
+
+
+{url:'/cards/31109-corrupted-healbot', img:'http://media-Hearth.cursecdn.com/avatars/282/843/635933082349675806.png', name:"Corrupted Healbot"},
+
+
+{url:'/cards/33148-cult-apothecary', img:'http://media-Hearth.cursecdn.com/avatars/284/633/635947637412776507.png', name:"Cult Apothecary"},
+
+
+{url:'/cards/33131-hallazeal-the-ascended', img:'http://media-Hearth.cursecdn.com/avatars/284/12/635942557135375705.png', name:"Hallazeal the Ascended"},
+
+
+{url:'/cards/35188-princess-huhuran', img:'http://media-Hearth.cursecdn.com/avatars/287/0/635966647747185979.png', name:"Princess Huhuran"},
+
+
+{url:'/cards/33179-servant-of-yogg-saron', img:'http://media-Hearth.cursecdn.com/avatars/286/349/635961603999526972.png', name:"Servant of Yogg-Saron"},
+
+
+{url:'/cards/33180-shadowcaster', img:'http://media-Hearth.cursecdn.com/avatars/286/430/635962332348647984.png', name:"Shadowcaster"},
+
+
+{url:'/cards/31115-validated-doomsayer', img:'http://media-Hearth.cursecdn.com/avatars/282/844/635933082596981368.png', name:"Validated Doomsayer"},
+
+
+{url:'/cards/33123-cthuns-chosen', img:'http://media-Hearth.cursecdn.com/avatars/283/820/635940731659528622.png', name:"C'Thun's Chosen"},
+
+
+{url:'/cards/35184-demented-frostcaller', img:'http://media-Hearth.cursecdn.com/avatars/286/559/635963186462518696.png', name:"Demented Frostcaller"},
+
+
+{url:'/cards/31121-eater-of-secrets', img:'http://media-Hearth.cursecdn.com/avatars/283/54/635934774511258078.png', name:"Eater of Secrets"},
+
+
+{url:'/cards/33133-faceless-shambler', img:'http://media-Hearth.cursecdn.com/avatars/284/161/635943631851846702.png', name:"Faceless Shambler"},
+
+
+{url:'/cards/33128-infested-tauren', img:'http://media-Hearth.cursecdn.com/avatars/283/827/635940756926994058.png', name:"Infested Tauren"},
+
+
+{url:'/cards/33121-klaxxi-amber-weaver', img:'http://media-Hearth.cursecdn.com/avatars/283/394/635936421009675093.png', name:"Klaxxi Amber-Weaver"},
+
+
+{url:'/cards/33160-master-of-evolution', img:'http://media-Hearth.cursecdn.com/avatars/285/202/635951163104410990.png', name:"Master of Evolution"},
+
+
+{url:'/cards/33162-mire-keeper', img:'http://media-Hearth.cursecdn.com/avatars/285/547/635953742901763457.png', name:"Mire Keeper"},
+
+
+{url:'/cards/31111-polluted-hoarder', img:'http://media-Hearth.cursecdn.com/avatars/282/845/635933082736494687.png', name:"Polluted Hoarder"},
+
+
+{url:'/cards/35186-shifting-shade', img:'http://media-Hearth.cursecdn.com/avatars/286/572/635963258511455573.png', name:"Shifting Shade"},
+
+
+{url:'/cards/33175-twilight-summoner', img:'http://media-Hearth.cursecdn.com/avatars/286/173/635959803394972057.png', name:"Twilight Summoner"},
+
+
+{url:'/cards/33139-xaril-poisoned-mind', img:'http://media-Hearth.cursecdn.com/avatars/284/346/635945220590196054.png', name:"Xaril, Poisoned Mind"},
+
+
+{url:'/cards/33181-forlorn-stalker', img:'http://media-Hearth.cursecdn.com/avatars/286/586/635963354548388965.png', name:"Forlorn Stalker"},
+
+
+{url:'/cards/33161-ravaging-ghoul', img:'http://media-Hearth.cursecdn.com/avatars/285/529/635953621002468599.png', name:"Ravaging Ghoul"},
+
+
+{url:'/cards/33137-spawn-of-nzoth', img:'http://media-Hearth.cursecdn.com/avatars/284/382/635945500883837713.png', name:"Spawn of N'Zoth"},
+
+
+{url:'/cards/33153-steward-of-darkshire', img:'http://media-Hearth.cursecdn.com/avatars/285/16/635950346905502351.png', name:"Steward of Darkshire"},
+
+
+{url:'/cards/31112-twilight-elder', img:'http://media-Hearth.cursecdn.com/avatars/282/846/635933082868233251.png', name:"Twilight Elder"},
+
+
+{url:'/cards/35187-twilight-flamecaller', img:'http://media-Hearth.cursecdn.com/avatars/286/631/635963924786474849.png', name:"Twilight Flamecaller"},
+
+
+{url:'/cards/31114-beckoner-of-evil', img:'http://media-Hearth.cursecdn.com/avatars/282/847/635933083009388873.png', name:"Beckoner of Evil"},
+
+
+{url:'/cards/33136-renounce-darkness', img:'http://media-Hearth.cursecdn.com/avatars/284/222/635944267322600388.png', name:"Renounce Darkness"},
+
+
+{url:'/cards/33135-undercity-huckster', img:'http://media-Hearth.cursecdn.com/avatars/284/447/635946106985017928.png', name:"Undercity Huckster"},
+
+
+{url:'/cards/33132-nzoths-first-mate', img:'http://media-Hearth.cursecdn.com/avatars/284/147/635943492226104733.png', name:"N'Zoth's First Mate"},
+
+
+{url:'/cards/33171-possessed-villager', img:'http://media-Hearth.cursecdn.com/avatars/285/904/635957179899135561.png', name:"Possessed Villager"},
+
+
+{url:'/cards/35190-shifter-zerus', img:'http://media-Hearth.cursecdn.com/avatars/286/901/635965890364430989.png', name:"Shifter Zerus"},
+
+
+{url:'/cards/33130-tentacle-of-nzoth', img:'http://media-Hearth.cursecdn.com/avatars/284/109/635943244128119512.png', name:"Tentacle of N'Zoth"},
+
+
+{url:'/cards/33158-vilefin-inquisitor', img:'http://media-Hearth.cursecdn.com/avatars/285/998/635958104397798895.png', name:"Vilefin Inquisitor"},
+
+]
+
+for(var i=0; i<cards.length; i++){
+    var id = cards[i].url.match(/\d+/)[0];
+    var c2 = manaRef.filter(function(x){return x.id==id});
+    if(c2.length > 0){
+    cards[i].manacost = c2[0].manacost;
+    }
+}
+
+var x = JSON.stringify(cards);
+
+makeTextFile = function (text) {
+    var data = new Blob([text], {type: 'text/plain'});
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+
+
+    textFile = window.URL.createObjectURL(data);
+
+    return textFile;
+  };
+
+var link = document.getElementById('downloadlink');
+    link.href = makeTextFile(x);
+    link.style.display = 'block';
+
 
     var model = {
         turns: [1,2,3,4,5,6,7,8,9,10],
         startTurn: ko.observable(1),
-        selectedCards: ko.observableArray()
+        selectedCards: ko.observableArray(), 
+        refreshCards: refreshCards,
+        cards: cards
     };
     var a = model.selectedCards();
-    for(var i=0; i<19; i++){
+    for(var i=0; i<20; i++){
         a.push({
-            url:ko.observable(''),
-            img:ko.observable(''),
-            manacost:ko.observable(0),
-            name:ko.observable(''),
-            currentMana:ko.observable(0)
+            url:ko.observable('/cards/35190-shifter-zerus'),
+            img:ko.observable('http://media-Hearth.cursecdn.com/avatars/286/901/635965890364430989.png'),
+            manacost:ko.observable(1),
+            name:ko.observable('Shifter Zerus'),
+            turn:ko.observable(1),
+            currentMana:ko.observable(1)
         })
     }
     
@@ -544,14 +1634,18 @@ var cards = [
     
     function refreshCards(){
         var x=model.startTurn();
-        for(var i=1; i<19; i++){
+        var sel = model.selectedCards();
+        sel[0].turn = x;
+        sel[0].currentMana(x>10?10:x);
+        for(var i=1; i<20; i++){
             var card = cards[getRandom(cards.length)];
-            var place = model.selectedCards()[i];
+            var place = sel[i];
             place.url(card.url);
             place.img(card.img);
-            place.manacost(-1);
+            place.manacost(10);
             place.name(card.name);
-            place.currentMana(i+x);
+            place.currentMana(i+x>10?10:i+x);
+            place.turn(i+x);
         }
     }
     function getRandom(i){
