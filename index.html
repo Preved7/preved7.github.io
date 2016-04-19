@@ -55,7 +55,7 @@
 <body>
 <div class="setup">
     <div data-bind="text: 'total cards: '+ cards.length"></div>
-    <label>Start at <select data-bind="options: turns, selectedValue: startTurn, event:{change: refreshCards}"></select></label>
+    <label>Start at <select data-bind="options: turns, value: startTurn, event:{change: refreshCards}"></select></label>
     <input type="submit" data-bind="click: refreshCards" value="Retry" />
 </div>
 <div class="result">
